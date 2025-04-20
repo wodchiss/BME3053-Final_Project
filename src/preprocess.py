@@ -1,51 +1,59 @@
-def parse_image_metadata(image_dir):
-    import os
-    import re
 
-    pattern = re.compile(r'C(\d+)_F(\d+)_s(\d+)_w(\d+)\.TIF$', re.IGNORECASE)
-    image_data = []
-
-    for filename in os.listdir(image_dir):
-        match = pattern.search(filename)
-        if match:
-            cell_count = int(match.group(1))
-            image_path = os.path.join(image_dir, filename)
-            image_data.append((image_path, cell_count))
-
-    return image_data
 ######
-from sklearn.model_selection import train_test_split
+import os
+import zipfile
+import numpy as np
+import pandas as pd
+from PIL import Image
 from skimage.transform import resize
 
-# Constants
-image_folder = "/mnt/data/BBBC005_v1/synthetic_2_ground_truth"
-target_size = (64, 64)  # Resize images to 64x64 for classical ML
+# === CONFIGURATION ===
+ZIP_PATH = "../data/BBBC005_v1_ground_truth.zip"
+CSV_PATH = "../data/BBBC005_results_bray.csv"
+EXTRACT_DIR = "../data/BBBC005_v1"
+IMAGE_SIZE = (64, 64)
 
-# Filter and map image filenames to full paths
-image_paths = {
-    os.path.basename(path): path
-    for path in extracted_files
-    if path.endswith(".TIF")
-}
 
-# Match images with labels from CSV
-valid_data = []
-for _, row in labels_df.iterrows():
-    filename = row["Image_FileName_Nuclei"]
-    label = row["Image_Metadata_ActualCellCount"]
-    if filename in image_paths:
-        valid_data.append((image_paths[filename], label))
+def extract_zip(zip_path, extract_to):
+    if not os.path.exists(extract_to):
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(extract_to)
+        print(f"Extracted images to {extract_to}")
+    else:
+        print(f"Images already extracted to {extract_to}")
 
-# Prepare feature matrix X and label vector y
-X, y = [], []
-for img_path, label in valid_data:
-    img = Image.open(img_path).convert("L")
-    img_resized = resize(np.array(img), target_size, anti_aliasing=True)
-    X.append(img_resized.flatten())
-    y.append(label)
 
-X = np.array(X)
-y = np.array(y)
+def load_dataset():
+    # Extract image data if needed
+    extract_zip(ZIP_PATH, EXTRACT_DIR)
 
-X.shape, y.shape
+    # Load labels CSV
+    labels_df = pd.read_csv(CSV_PATH)
+
+    # Build mapping of image filename to full path
+    image_paths = {}
+    for root, _, files in os.walk(EXTRACT_DIR):
+        for file in files:
+            if file.endswith(".TIF"):
+                image_paths[file] = os.path.join(root, file)
+
+    # Match filenames to labels
+    X, y = [], []
+    for _, row in labels_df.iterrows():
+        filename = row["Image_FileName_Nuclei"]
+        label = row["Image_Metadata_ActualCellCount"]
+        if filename in image_paths:
+            img = Image.open(image_paths[filename]).convert("L")
+            img_resized = resize(np.array(img), IMAGE_SIZE, anti_aliasing=True)
+            X.append(img_resized.flatten())
+            y.append(label)
+
+    X = np.array(X)
+    y = np.array(y)
+    print(f"Processed {len(X)} images. Feature shape: {X.shape}, Labels shape: {y.shape}")
+    return X, y
+
+
+if __name__ == "__main__":
+    X, y = load_dataset()
 
