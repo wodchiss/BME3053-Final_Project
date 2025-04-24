@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 # Create the model directory if it doesn't exist
 os.makedirs("../model", exist_ok=True)
 
+DATA_DIR = "data"
+
 MODEL_PATH = "../model/random_forest_model.pkl"
-joblib.dump(your_trained_model, MODEL_PATH)
 
 # === Load Preprocessed Data ===
 X_train = pd.read_csv(f"{DATA_DIR}/X_train_scaled.csv")
