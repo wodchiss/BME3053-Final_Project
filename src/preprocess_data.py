@@ -32,3 +32,8 @@ pd.DataFrame(y_train).to_csv("data/y_train.csv", index=False)
 pd.DataFrame(y_test).to_csv("data/y_test.csv", index=False)
 
 print("Preprocessing completed and data saved.")
+# Print data shape
+print(f"X_train shape: {X_train.shape}")
+print(f"X_test shape:  {X_test.shape}")
+print(f"y_train shape: {y_train.shape}")
+print(f"y_test shape:  {y_test.shape}")
