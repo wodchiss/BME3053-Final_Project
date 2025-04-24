@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 import joblib
 import os
+import matplotlib.pyplot as plt
 
 
 # Create the model directory if it doesn't exist
@@ -33,7 +34,18 @@ print(f"📉 Mean Squared Error (MSE): {mse:.2f}")
 print(f"📈 R-squared (R²): {r2:.2f}")
 
 # === Save Model ===
-import os
+
 os.makedirs("model", exist_ok=True)
 joblib.dump(model, MODEL_PATH)
 print(f"💾 Model saved to: {MODEL_PATH}")
+
+
+plt.figure(figsize=(8, 6))
+plt.scatter(y_test, y_pred, alpha=0.5)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
+plt.xlabel("Actual Cell Count")
+plt.ylabel("Predicted Cell Count")
+plt.title("Predicted vs. Actual Cell Counts")
+plt.grid(True)
+plt.show()
+
