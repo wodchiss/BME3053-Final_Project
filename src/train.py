@@ -11,7 +11,7 @@ os.makedirs("../model", exist_ok=True)
 
 DATA_DIR = "data"
 
-MODEL_PATH = "../model/random_forest_model.pkl"
+MODEL_PATH = "model/random_forest_model.pkl"  # Update the path to match the created directory
 
 # === Load Preprocessed Data ===
 X_train = pd.read_csv(f"{DATA_DIR}/X_train_scaled.csv")
@@ -35,9 +35,9 @@ print(f"📉 Mean Squared Error (MSE): {mse:.2f}")
 print(f"📈 R-squared (R²): {r2:.2f}")
 
 # === Save Model ===
-
-os.makedirs("model", exist_ok=True)
-joblib.dump(model, MODEL_PATH)
+os.makedirs("model", exist_ok=True)  # Ensure the directory exists
+with open(MODEL_PATH, 'wb') as f:
+    joblib.dump(model, f)
 print(f"💾 Model saved to: {MODEL_PATH}")
 
 
