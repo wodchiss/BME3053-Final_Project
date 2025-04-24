@@ -14,3 +14,18 @@ Datasets: https://bbbc.broadinstitute.org/BBBC005
 
 MEETING
 https://ufl.zoom.us/j/8985961862?omn=97791309928
+
+
+
+First the file with the images needs to be unzipped in the terminal using: 
+
+Second run preprocessing code in terminal using: python src/preprocess_data.py
+
+After running the preprocessing script:
+
+X_train.shape: (7680, 22)
+X_test.shape: (1920, 22)
+y_train.shape: (7680,)
+y_test.shape: (1920,)
+
+Features were standardized using StandardScaler, and categorical columns (Image_FileName_CellBody, Image_FileName_Nuclei) were label-encoded. Data was split using an 80/20 train-test ratio.
