@@ -5,13 +5,11 @@ import joblib
 import os
 import matplotlib.pyplot as plt
 
-
 # Create the model directory if it doesn't exist
-os.makedirs("../model", exist_ok=True)
+os.makedirs("model", exist_ok=True)
 
 DATA_DIR = "data"
-
-MODEL_PATH = "model/random_forest_model.pkl"  # Update the path to match the created directory
+MODEL_PATH = "model/random_forest_model.pkl"
 
 # === Load Preprocessed Data ===
 X_train = pd.read_csv(f"{DATA_DIR}/X_train_scaled.csv")
@@ -35,12 +33,11 @@ print(f"📉 Mean Squared Error (MSE): {mse:.2f}")
 print(f"📈 R-squared (R²): {r2:.2f}")
 
 # === Save Model ===
-os.makedirs("model", exist_ok=True)  # Ensure the directory exists
 with open(MODEL_PATH, 'wb') as f:
     joblib.dump(model, f)
 print(f"💾 Model saved to: {MODEL_PATH}")
 
-
+# === Visualize Predictions ===
 plt.figure(figsize=(8, 6))
 plt.scatter(y_test, y_pred, alpha=0.5)
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')

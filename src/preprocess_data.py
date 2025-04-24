@@ -10,10 +10,7 @@ X = df.drop("Image_Metadata_ActualCellCount", axis=1)  # Replace with the actual
 y = df["Image_Metadata_ActualCellCount"]  # Replace with the actual target column name
 
 # Handle categorical data (if any) - encoding categorical columns
-# Example: Encoding 'Image_FileName_CellBody' and 'Image_FileName_Nuclei'
-# If you have categorical columns, encode them using LabelEncoder
 label_encoder = LabelEncoder()
-
 categorical_columns = ['Image_FileName_CellBody', 'Image_FileName_Nuclei']  # Add more categorical columns if needed
 for col in categorical_columns:
     X[col] = label_encoder.fit_transform(X[col])
@@ -25,7 +22,7 @@ X_scaled = scaler.fit_transform(X)
 # Split the data into training and testing sets (80% train, 20% test)
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
-# Save the preprocessed data (optional)
+# Save the preprocessed data
 pd.DataFrame(X_train).to_csv("data/X_train_scaled.csv", index=False)
 pd.DataFrame(X_test).to_csv("data/X_test_scaled.csv", index=False)
 pd.DataFrame(y_train).to_csv("data/y_train.csv", index=False)
