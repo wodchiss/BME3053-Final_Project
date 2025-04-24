@@ -1,0 +1,10 @@
+numpy
+pandas
+matplotlib
+jupyter
+scikit-learn
+tensorflow
+requests
+flask
+ipywidgets
+notebook
