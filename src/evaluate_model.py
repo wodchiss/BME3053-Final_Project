@@ -5,6 +5,8 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import numpy as np
 import pandas as pd
 from model import load_model
+import glob
+from skimage.io import imread
 
 def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     """
@@ -88,11 +90,22 @@ if __name__ == "__main__":
     # Load test data
     X_test = pd.read_csv("data/X_test_scaled.csv").values
     y_test = pd.read_csv("data/y_test.csv").values.ravel()
-
+    # y_test= y_test[:10]
+    # X_test = X_test[:10][:]
+    # print(np.shape(X_test))
     # Load corresponding images (if available)
     # Replace with the actual path to your images or image data
     # Example: images = np.load("data/test_images.npy")
-    images = None  # Set to None if no images are available
+    # Set to None if no images are available
+    # Load 10 random TIF images from the specified folder
+    image_paths = glob.glob("/workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/*.TIF")
+    print(len(image_paths))
+    if not image_paths:
+        raise FileNotFoundError("No .tif files found in the specified folder: /workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/")
+
+    np.random.seed(42)  # For reproducibility
+    selected_image_paths = sorted(image_paths)  # Select the first 10 images for demonstration
+    images = [imread(path) for path in selected_image_paths]
 
     print(f"X_test shape: {X_test.shape}")
     print(f"y_test shape: {y_test.shape}")
