@@ -119,7 +119,6 @@ if __name__ == "__main__":
 
     # Load corresponding images (if available)
     image_paths = glob.glob("/workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/*.TIF")
-    print(len(image_paths))
     if not image_paths:
         raise FileNotFoundError("No .tif files found in the specified folder: /workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/")
 
@@ -127,14 +126,10 @@ if __name__ == "__main__":
     selected_image_paths = sorted(image_paths)
     images = [imread(path) for path in selected_image_paths]
 
-    print(f"X_test shape: {X_test.shape}")
-    print(f"y_test shape: {y_test.shape}")
-
-    print("NaN in X_test:", np.isnan(X_test).any())
-    print("NaN in y_test:", np.isnan(y_test).any())
 
     # Path to the saved model
     model_path = "model/random_forest_model.pkl"
 
     # Evaluate the model
     evaluate_model(model_path, X_test, y_test, images=images)
+
