@@ -45,20 +45,45 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     plt.title("Predicted vs. Actual Values")
     plt.legend()
     plt.grid(True)
-    plt.savefig(os.path.join(save_dir, "predicted_vs_actual.png"))  # Save the scatter plot
+    plt.savefig(os.path.join(save_dir, "predicted_vs_actual.png"))
     plt.show()
 
     # Create a confusion matrix (for regression, bin predictions into ranges)
-    bins = np.linspace(y_test.min(), y_test.max(), 11)  # Create 10 intervals (11 bin edges)
-    y_test_binned = np.digitize(y_test, bins[:-1])  # Use bins[:-1] to avoid an extra bin
+    bins = np.linspace(y_test.min(), y_test.max(), 11)  # Create 10 intervals
+    y_test_binned = np.digitize(y_test, bins[:-1])
     y_pred_binned = np.digitize(y_pred, bins[:-1])
 
     cm = confusion_matrix(y_test_binned, y_pred_binned)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=[f"Bin {i}" for i in range(1, len(bins))])
     disp.plot(cmap=plt.cm.Blues)
     plt.title("Confusion Matrix (Binned Predictions)")
-    plt.savefig(os.path.join(save_dir, "confusion_matrix.png"))  # Save the confusion matrix
+    plt.savefig(os.path.join(save_dir, "confusion_matrix.png"))
     plt.show()
+
+    # Calculate and print Accuracy, Precision, Recall
+    total_correct = np.trace(cm)
+    total_samples = np.sum(cm)
+    accuracy = total_correct / total_samples
+
+    recalls = []
+    precisions = []
+    for i in range(len(cm)):
+        TP = cm[i, i]
+        FN = np.sum(cm[i, :]) - TP
+        FP = np.sum(cm[:, i]) - TP
+        recall = TP / (TP + FN) if (TP + FN) > 0 else 0
+        precision = TP / (TP + FP) if (TP + FP) > 0 else 0
+        recalls.append(recall)
+        precisions.append(precision)
+        print(f"🔹 Bin {i+1}: Recall = {recall:.4f}, Precision = {precision:.4f}")
+
+    avg_recall = np.mean(recalls)
+    avg_precision = np.mean(precisions)
+
+    print("\n✅ Overall Evaluation (Binned Predictions):")
+    print(f"  - Accuracy: {accuracy:.4f}")
+    print(f"  - Average Recall: {avg_recall:.4f}")
+    print(f"  - Average Precision: {avg_precision:.4f}")
 
     # Visualize images with predicted and actual values (if images are provided)
     if images is None or len(images) != len(y_test):
@@ -73,7 +98,7 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
         plt.title(f"True: {y_test[i]}\nPred: {y_pred[i]:.2f}")
         plt.axis('off')
     plt.tight_layout()
-    plt.savefig(os.path.join(save_dir, "image_predictions.png"))  # Save the image visualization
+    plt.savefig(os.path.join(save_dir, "image_predictions.png"))
     plt.show()
 
     # Print some images with their predicted and actual values
@@ -90,21 +115,15 @@ if __name__ == "__main__":
     # Load test data
     X_test = pd.read_csv("data/X_test_scaled.csv").values
     y_test = pd.read_csv("data/y_test.csv").values.ravel()
-    # y_test= y_test[:10]
-    # X_test = X_test[:10][:]
-    # print(np.shape(X_test))
+
     # Load corresponding images (if available)
-    # Replace with the actual path to your images or image data
-    # Example: images = np.load("data/test_images.npy")
-    # Set to None if no images are available
-    # Load 10 random TIF images from the specified folder
     image_paths = glob.glob("/workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/*.TIF")
     print(len(image_paths))
     if not image_paths:
         raise FileNotFoundError("No .tif files found in the specified folder: /workspaces/BME3053-Final_Project/data/BBBC005_v1_ground_truth/")
 
-    np.random.seed(42)  # For reproducibility
-    selected_image_paths = sorted(image_paths)  # Select the first 10 images for demonstration
+    np.random.seed(42)
+    selected_image_paths = sorted(image_paths)
     images = [imread(path) for path in selected_image_paths]
 
     print(f"X_test shape: {X_test.shape}")
