@@ -80,7 +80,7 @@ BME3053C_Final_Project/
 
 ---
 
-## Repository Structure
+_## Repository Structure
 
 ```
 ```
