@@ -74,7 +74,7 @@ BME3053C_Final_Project/
 4. **Evaluate the Model**  
    To compute evaluation metrics (accuracy, precision, recall, F1 score):
    ```bash
-   python src/evaluate_data.py
+   python src/evaluate_model.py
    ```
    This script loads the test data and the trained model. It prints the performance metrics to the terminal and saves the confusion matrix to the `plots/` directory. These metrics help assess how well the model generalizes to unseen data.
 
@@ -114,3 +114,9 @@ BME3053C_Final_Project/
 - [Scikit-learn Logistic Regression Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
 
 ---
+
+## this is the link to the YouTube video
+https://youtu.be/SLg7avwkop0
+
+## this is the powerpoint presentation
+https://uflorida-my.sharepoint.com/:p:/g/personal/howecooper_ufl_edu/EZXZQATQw0RLp1eRgSkCEzIB1hvWE4yL2aJoOkTtKAnz-A?e=1lrLvr&wdLOR=c65658CCB-11F0-413C-A96D-25F4E5A03CA9
