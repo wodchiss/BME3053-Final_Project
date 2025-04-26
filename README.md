@@ -1,31 +1,96 @@
-# BME3053-Final_Project
+# BME3053C_Final_Project
 
-Our topic for this project is cell detection where we aim to develop an automated solution for detecting and counting cell nuclei in microscopy images. Accurately counting cells is useful in drug development and cancer diagnosis as well as many other applications. However, manual cell counting is incredibly inefficient and risks human error. To address this, we will use the Data Science Bowl 2018 dataset, which is linked below, that will help us create a cell nucleus detection model. We will also utilize two Github repositories linked below to train our model. We are currently looking into the use of U-Net (first Github link) as a way towards image segmentation that would help up isolate and identify cell nuclei. This is a deep learning model that would automatically identify cell nuclei. The second Github link provides valuable datasets as well as alternate methods of cell detection. All of these resources combined will allow us to train our model on a variety of images with varying cell types. By automating the cell counting process, our solution will improve efficiency, reduce human error, and improve accuracy.
+This project focuses on predicting cell counts using machine learning models (Logistic Regression) based on microscopy image data from the BBBC005 dataset.
 
+---
 
-Models:
+## **Dataset**
+The dataset used is from the Broad Bioimage Benchmark Collection:
 
-https://github.com/blakeliu/awesome-cell-detection-segmentation 
+- [BBBC005 Dataset](https://bbbc.broadinstitute.org/BBBC005)
 
-https://github.com/brainglobe/cellfinder 
+Download the dataset, unzip it, and organize it as follows inside the project:
 
+```
+BME3053C_Final_Project/
+└── BBBC005_v1/
+    ├── train_images/
+    ├── train_masks/
+    ├── test_images/
+    ├── test_masks/
+    └── preprocessed/ (created after preprocessing)
+```
 
-Datasets: https://bbbc.broadinstitute.org/BBBC005
+---
 
-MEETING
-https://ufl.zoom.us/j/8985961862?omn=97791309928
+## **Setup Instructions**
 
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-username/BME3053C_Final_Project.git
+   cd BME3053C_Final_Project
+   ```
 
+2. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-First the file with the images needs to be unzipped in the terminal using: 
+3. **Prepare the Dataset**
+   After downloading `BBBC005_v1_ground_truth.zip`, unzip it into a folder called `check`:
+   ```bash
+   unzip BBBC005_v1_ground_truth.zip -d check/
+   ```
 
-Second run preprocessing code in terminal using: python src/preprocess_data.py
+---
 
-After running the preprocessing script:
+## **Running the Code**
 
-X_train.shape: (7680, 22)
-X_test.shape: (1920, 22)
-y_train.shape: (7680,)
-y_test.shape: (1920,)
+1. **Preprocess the Data**
+   Preprocess the raw images and create train/test datasets:
+   ```bash
+   python src/preprocess.py
+   ```
+   You should see:
+   ```
+   X_train_scaled.npy, X_test_scaled.npy, y_train.npy, y_test.npy
+   ```
+   saved inside `BBBC005_v1/preprocessed/`.
 
-Features were standardized using StandardScaler, and categorical columns (Image_FileName_CellBody, Image_FileName_Nuclei) were label-encoded. Data was split using an 80/20 train-test ratio.
+2. **Train the Model**
+   Train a Logistic Regression model:
+   ```bash
+   python src/train_logistic_regression.py
+   ```
+   Training metrics and a model performance summary will be printed.
+
+---
+
+## **Repository Structure**
+
+```
+BME3053C_Final_Project/
+├── BBBC005_v1/
+│   ├── train_images/
+│   ├── train_masks/
+│   ├── test_images/
+│   ├── test_masks/
+│   └── preprocessed/
+│       ├── X_train_scaled.npy
+│       ├── X_test_scaled.npy
+│       ├── y_train.npy
+│       └── y_test.npy
+├── src/
+│   ├── preprocess.py
+│   └── train_logistic_regression.py
+├── README.md
+├── requirements.txt
+```
+
+---
+
+## **References**
+- [Broad Bioimage Benchmark Collection](https://bbbc.broadinstitute.org/BBBC005)
+- [Scikit-learn Logistic Regression Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+
+---
