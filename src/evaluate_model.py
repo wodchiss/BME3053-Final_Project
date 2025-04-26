@@ -11,13 +11,6 @@ from skimage.io import imread
 def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     """
     Evaluate the trained model and visualize results.
-
-    Args:
-        model_path (str): Path to the saved model.
-        X_test (array-like): Test features.
-        y_test (array-like): True labels for the test set.
-        images (array-like, optional): Images corresponding to the test set for visualization.
-        save_dir (str): Directory to save the plots.
     """
     # Ensure the save directory exists
     os.makedirs(save_dir, exist_ok=True)
@@ -60,30 +53,38 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     plt.savefig(os.path.join(save_dir, "confusion_matrix.png"))
     plt.show()
 
-    # Calculate and print Accuracy, Precision, Recall
+    # Calculate and print Accuracy, Precision, Recall, F1 Score
     total_correct = np.trace(cm)
     total_samples = np.sum(cm)
     accuracy = total_correct / total_samples
 
     recalls = []
     precisions = []
+    f1_scores = []
+
     for i in range(len(cm)):
         TP = cm[i, i]
         FN = np.sum(cm[i, :]) - TP
         FP = np.sum(cm[:, i]) - TP
         recall = TP / (TP + FN) if (TP + FN) > 0 else 0
         precision = TP / (TP + FP) if (TP + FP) > 0 else 0
+        f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+
         recalls.append(recall)
         precisions.append(precision)
-        print(f"🔹 Bin {i+1}: Recall = {recall:.4f}, Precision = {precision:.4f}")
+        f1_scores.append(f1)
+
+        print(f"🔹 Bin {i+1}: Recall = {recall:.4f}, Precision = {precision:.4f}, F1 Score = {f1:.4f}")
 
     avg_recall = np.mean(recalls)
     avg_precision = np.mean(precisions)
+    avg_f1 = np.mean(f1_scores)
 
     print("\n✅ Overall Evaluation (Binned Predictions):")
     print(f"  - Accuracy: {accuracy:.4f}")
     print(f"  - Average Recall: {avg_recall:.4f}")
     print(f"  - Average Precision: {avg_precision:.4f}")
+    print(f"  - Average F1 Score: {avg_f1:.4f}")
 
     # Visualize images with predicted and actual values (if images are provided)
     if images is None or len(images) != len(y_test):
