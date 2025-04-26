@@ -110,7 +110,7 @@ BME3053C_Final_Project/
 ---
 
 ## References
-
+"We used the image set BBBC005v1 from the Broad Bioimage Benchmark Collection [Ljosa et al., Nature Methods, 2012]."
 - [Broad Bioimage Benchmark Collection](https://bbbc.broadinstitute.org/BBBC005)
 - [Scikit-learn Logistic Regression Documentation](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
 
