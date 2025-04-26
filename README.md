@@ -80,9 +80,8 @@ BME3053C_Final_Project/
 
 ---
 
-_## Repository Structure
+## Repository Structure
 
-```
 ```
 BME3053C_Final_Project/
 ├── data/
