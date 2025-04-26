@@ -8,7 +8,7 @@ This project focuses on predicting cell counts using machine learning models (Lo
 
 The dataset used is from the Broad Bioimage Benchmark Collection:
 
-- [BBBC005 Dataset](https://bbbc.broadinstitute.org/BBBC005)
+- Dataset link: [[BBBC005 Dataset](https://bbbc.broadinstitute.org/BBBC005)](https://bbbc.broadinstitute.org/BBBC005)
 
 Download the dataset, unzip it, and organize it as follows inside the project:
 
