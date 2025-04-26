@@ -92,7 +92,9 @@ BME3053C_Final_Project/
 │   ├── X_train_scaled.npy
 │   ├── X_test_scaled.npy
 │   ├── y_train.npy
-│   └── y_test.npy
+│   ├── y_test.npy
+├── model/
+│   ├── random_forest_model.pkl
 ├── src/
 │   ├── preprocess_data.py
 │   ├── train.py
