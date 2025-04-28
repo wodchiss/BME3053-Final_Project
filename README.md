@@ -107,6 +107,49 @@ BME3053C_Final_Project/
 
 ---
 
+
+## Project Structure Overview
+
+---
+
+### **data/**
+- **`BBBC005_v1_ground_truth.zip`**: Contains the ground truth labels for the BBBC005 dataset, used for training and evaluating the model.
+- **`synthetic_2_ground_truth.zip`**: Contains synthetic ground truth data for additional validation or testing.
+- **`BBBC005_results_bray.csv`**: Precomputed results or metadata from the BBBC005 dataset, useful for analysis or preprocessing.
+- **`X_train_scaled.npy`**: Scaled training feature data in NumPy array format.
+- **`X_test_scaled.npy`**: Scaled testing feature data in NumPy array format.
+- **`y_train.npy`**: Training labels (targets) as a NumPy array.
+- **`y_test.npy`**: Testing labels (targets) as a NumPy array.
+
+---
+
+### **model/**
+- **`random_forest_model.pkl`**: Serialized Random Forest model saved using pickle, storing the trained model for reuse.
+
+---
+
+### **src/**
+- **`preprocess_data.py`**: Preprocessing script that scales, normalizes, and splits the dataset into training and testing sets.
+- **`train.py`**: Training script for fitting the machine learning model (Logistic Regression) using the preprocessed data, and saving the model.
+- **`test_model.py`**: Testing script that loads the trained model and test data, generates predictions, and produces a scatter plot comparing actual vs. predicted values.
+- **`evaluate_model.py`**: Evaluation script that computes performance metrics (accuracy, precision, recall, F1 score) and generates a confusion matrix plot.
+
+---
+
+### **plots/**
+- **`actual_vs_predicted_plot.png`**: Scatter plot comparing actual versus predicted cell counts, generated during testing.
+- **`confusion_matrix.png`**: Confusion matrix visualizing the model’s classification performance.
+
+---
+
+### **Root Files**
+- **`README.md`**: Main documentation file, providing project overview, setup instructions, and usage guidelines.
+- **`requirements.txt`**: List of Python dependencies required to run the project (`pip install -r requirements.txt`).
+
+---
+
+
+
 ## References
 "We used the image set BBBC005v1 from the Broad Bioimage Benchmark Collection [Ljosa et al., Nature Methods, 2012]."
 - [Broad Bioimage Benchmark Collection](https://bbbc.broadinstitute.org/BBBC005)
