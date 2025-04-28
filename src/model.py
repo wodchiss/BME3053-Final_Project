@@ -15,7 +15,7 @@ def save_model(model, path="model/random_forest_model.pkl"):
     """
     os.makedirs(os.path.dirname(path), exist_ok=True)
     joblib.dump(model, path)
-    print(f"💾 Model saved to: {path}")
+    print(f"Model saved to: {path}")
 
 def load_model(path="model/random_forest_model.pkl"):
     """

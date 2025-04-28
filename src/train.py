@@ -28,14 +28,14 @@ y_pred = model.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
-print("✅ Model training complete.")
-print(f"📉 Mean Squared Error (MSE): {mse:.2f}")
-print(f"📈 R-squared (R²): {r2:.2f}")
+print("Model training complete.")
+print(f"Mean Squared Error (MSE): {mse:.2f}")
+print(f"R-squared (R²): {r2:.2f}")
 
 # === Save Model ===
 with open(MODEL_PATH, 'wb') as f:
     joblib.dump(model, f)
-print(f"💾 Model saved to: {MODEL_PATH}")
+print(f"Model saved to: {MODEL_PATH}")
 
 # === Visualize Predictions ===
 plt.figure(figsize=(8, 6))

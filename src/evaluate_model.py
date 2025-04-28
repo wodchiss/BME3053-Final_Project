@@ -25,9 +25,9 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     mse = mean_squared_error(y_test, y_pred)
     r2 = r2_score(y_test, y_pred)
 
-    print("📊 Evaluation Metrics:")
-    print(f"📉 Mean Squared Error (MSE): {mse:.2f}")
-    print(f"📈 R-squared (R²): {r2:.2f}")
+    print("Evaluation Metrics:")
+    print(f"Mean Squared Error (MSE): {mse:.2f}")
+    print(f"R-squared (R²): {r2:.2f}")
 
     # Visualize predicted vs actual values (scatter plot)
     plt.figure(figsize=(8, 6))
@@ -80,7 +80,7 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
     avg_precision = np.mean(precisions)
     avg_f1 = np.mean(f1_scores)
 
-    print("\n✅ Overall Evaluation (Binned Predictions):")
+    print("\nOverall Evaluation (Binned Predictions):")
     print(f"  - Accuracy: {accuracy:.4f}")
     print(f"  - Average Recall: {avg_recall:.4f}")
     print(f"  - Average Precision: {avg_precision:.4f}")
@@ -88,7 +88,7 @@ def evaluate_model(model_path, X_test, y_test, images=None, save_dir="plots"):
 
     # Visualize images with predicted and actual values (if images are provided)
     if images is None or len(images) != len(y_test):
-        print("⚠️ Images are not provided or do not match the number of test samples. Skipping image visualization.")
+        print("Images are not provided or do not match the number of test samples. Skipping image visualization.")
         return
 
     num_images = min(5, len(images))  # Show up to 5 images
