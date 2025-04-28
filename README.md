@@ -29,7 +29,6 @@ BME3053C_Final_Project/
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/wodchiss/BME3053C_Final_Project.git
-   cd BME3053C_Final_Project
    ```
 
 2. **Install Dependencies**
